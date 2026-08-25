@@ -32,9 +32,15 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
+
+# Machine-local npm cache override (see .npmrc's own comment) — points at a
+# path specific to one developer's machine, must never be committed/shipped
+# to Vercel's build container.
+.npmrc
 
 # typescript
 *.tsbuildinfo

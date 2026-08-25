@@ -1,0 +1,327 @@
+// Prisma 7 breaking change vs. the plan's original draft:
+// - `datasource db { url = ... }` / `directUrl = ...` are NO LONGER supported inside
+//   schema.prisma. Connection URLs now live in `prisma.config.ts` (project root):
+//     - `datasource.url` there is used by the Prisma CLI (validate/generate/migrate/db seed)
+//       and should point at the DIRECT (non-pooled) connection, since migrations run DDL.
+//     - The Prisma Client at RUNTIME no longer reads a schema-embedded url either — it now
+//       requires an explicit driver adapter. See src/lib/server/db.ts, which constructs
+//       `new PrismaPg({ connectionString: process.env.DATABASE_URL })` (the POOLED url) and
+//       passes it as `adapter` to `new PrismaClient({ adapter })`.
+// - See prisma/README.md for the full explanation, the CHECK constraint migration note, and
+//   the exact commands to run once a real Neon connection string is available.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  OWNER
+  MEMBER
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum Currency {
+  TRY
+  USD
+  EUR
+}
+
+enum RecurringFrequency {
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum BudgetPeriod {
+  MONTHLY
+}
+
+// Password-reset link vs. email-verification link — same shape (a hashed,
+// single-use, expiring token tied to one user), different purpose, so one
+// model with a `purpose` discriminator instead of two near-identical tables.
+// See src/lib/server/auth-tokens.ts for the create/consume logic.
+enum AuthTokenPurpose {
+  PASSWORD_RESET
+  EMAIL_VERIFICATION
+}
+
+model AuthToken {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // SHA-256 hex digest of the raw token, never the raw token itself — same
+  // "don't store the usable secret" discipline as User.passwordHash, so a
+  // DB leak alone can't be used to reset an account or forge a verified
+  // email. Unique because a hash collision would otherwise let one token
+  // resolve to two rows; astronomically unlikely with SHA-256, but the
+  // constraint is free and makes the lookup itself unambiguous.
+  tokenHash String           @unique
+  purpose   AuthTokenPurpose
+  expiresAt DateTime
+  // Single-use: set the moment the token is successfully consumed. A
+  // present `usedAt` means "reject this token even if not yet expired" —
+  // see consumeAuthToken's replay-guard.
+  usedAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  // Looked up by (userId, purpose) when issuing a NEW token, to invalidate
+  // any still-outstanding one of the same purpose first (see
+  // createAuthToken) — only the most recently emailed link should ever work.
+  @@index([userId, purpose])
+}
+
+model User {
+  id                String    @id @default(cuid())
+  name              String
+  email             String    @unique
+  passwordHash      String
+  preferredLanguage String    @default("tr")
+  preferredCurrency Currency  @default(TRY)
+  // NULL = never verified. Set once, to the verification timestamp, by
+  // verifyEmail (src/lib/server/actions/email-verification.ts) — never
+  // cleared back to NULL (an email CHANGE re-verifying is out of scope for
+  // this feature; updateProfile still allows changing the address today,
+  // which means that edge case — a verified account's email becomes
+  // unverified-in-spirit after a change — is a known, accepted gap, not an
+  // oversight).
+  emailVerifiedAt   DateTime?
+  // Bumped to "now" every time the password is set via `resetPassword`
+  // (lib/server/actions/password-reset.ts) or `changePassword`
+  // (lib/server/actions/settings.ts). Embedded in the JWT at sign-in
+  // (`token.pwv`, see lib/server/auth.ts's `jwt` callback) and periodically
+  // re-checked against this column so that changing the password can
+  // actually invalidate any OTHER still-live session for the account — a
+  // pure JWT strategy has no revocation otherwise, since the signed cookie
+  // alone stays trusted for up to `maxAge` (7 days) regardless of what
+  // happens to the account afterward.
+  passwordChangedAt DateTime  @default(now())
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  ownedFamily               Family?                @relation("FamilyOwner")
+  familyMemberships         FamilyMember[]
+  transactions              Transaction[]          @relation("TransactionOwner")
+  createdTransactions       Transaction[]          @relation("TransactionCreator")
+  categories                Category[]
+  budgets                   Budget[]
+  recurringTemplates        RecurringTransaction[] @relation("RecurringTransactionOwner")
+  createdRecurringTemplates RecurringTransaction[] @relation("RecurringTransactionCreator")
+  sentInvites               FamilyInvite[]
+  authTokens                AuthToken[]
+
+  @@index([email])
+}
+
+model Family {
+  id        String   @id @default(cuid())
+  name      String
+  ownerId   String   @unique
+  owner     User     @relation("FamilyOwner", fields: [ownerId], references: [id])
+  createdAt DateTime @default(now())
+  // Owner-only kill switch (default off). While true:
+  //  - MEMBER rows can no longer change their OWN
+  //    `FamilyMember.shareIndividualTransactions` toggle
+  //    (updateTransactionSharing in lib/server/actions/family.ts rejects
+  //    the attempt) — the OWNER is exempt, they can always change their own.
+  //  - Every CURRENT member's individual (`familyId: null`) transactions are
+  //    treated as shared in family-wide reads
+  //    (lib/server/actions/family-transactions.ts), regardless of each
+  //    member's own toggle value or of what `sharedFamilyId` was stamped at
+  //    creation time. This is a READ-TIME override, not a data mutation —
+  //    no `Transaction` row is rewritten when this flips, and turning it
+  //    back off simply stops widening the read again (nothing to "undo").
+  forceShareIndividualTransactions Boolean @default(false)
+  // Owner-only toggle (default off). While true: a MEMBER may soft-delete a
+  // REAL family transaction (`Transaction.familyId` set to this family) that
+  // THEY THEMSELVES created (`Transaction.userId === actorUserId`) — never
+  // another member's or the OWNER's. The OWNER's own delete rights are
+  // unaffected either way (always full — see `canDeleteTransaction`,
+  // lib/domain/transactions/authorization.ts). Does not touch edit rights
+  // (already ownership-only, unaffected by this) or the `sharedFamilyId`
+  // (shared-individual-transaction) delete path, which stays exactly as
+  // before regardless of this flag.
+  membersCanDeleteOwnTransactions Boolean @default(false)
+
+  members            FamilyMember[]
+  transactions       Transaction[]
+  categories         Category[]
+  budgets            Budget[]
+  recurringTemplates RecurringTransaction[]
+  invites            FamilyInvite[]
+}
+
+model FamilyMember {
+  id       String   @id @default(cuid())
+  familyId String
+  userId   String
+  role     Role
+  joinedAt DateTime @default(now())
+  // Kendi kontrolündeki tercih: açıksa, bu üyenin BİREYSEL (familyId: null)
+  // işlemleri aile'nin ortak görünümünde (family-transactions.ts okuma
+  // action'ları) de görünür — işlemin kendisi ailenin sahibi olmaz
+  // (familyId değişmez), sadece salt-okunur olarak dahil edilir; mutasyon
+  // hakları (düzenle/sil) her zaman sadece bu üyede kalır.
+  shareIndividualTransactions Boolean @default(false)
+
+  family Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([familyId, userId])
+  // Kullanıcı başına tek aile kararını (bkz. Aile Planı roadmap'i) DB
+  // seviyesinde de garanti eder — createFamily/acceptInvite'daki
+  // "zaten üye mi" kontrolü ile $transaction arasındaki race'i kapatır.
+  // [familyId, userId] unique'i zaten indeksliyor olsa da bu, farklı bir
+  // constraint (tek başına userId) olduğu için ayrı bir @@unique gerekir.
+  @@unique([userId])
+}
+
+model FamilyInvite {
+  id         String    @id @default(cuid())
+  familyId   String
+  email      String?
+  token      String    @unique
+  invitedBy  String
+  expiresAt  DateTime
+  acceptedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  family  Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  inviter User   @relation(fields: [invitedBy], references: [id])
+
+  @@index([familyId])
+}
+
+model Category {
+  id        String          @id @default(cuid())
+  name      String
+  type      TransactionType
+  isDefault Boolean         @default(false)
+  icon      String?
+  color     String?
+  userId    String?
+  familyId  String?
+  createdAt DateTime        @default(now())
+  deletedAt DateTime?
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  family Family? @relation(fields: [familyId], references: [id], onDelete: Cascade)
+
+  transactions       Transaction[]
+  budgets            Budget[]
+  recurringTemplates RecurringTransaction[]
+
+  @@index([userId])
+  @@index([familyId])
+  @@index([type])
+}
+
+model Transaction {
+  id                     String          @id @default(cuid())
+  userId                 String
+  familyId               String?
+  createdById            String
+  type                   TransactionType
+  amount                 Decimal         @db.Decimal(14, 2)
+  currency               Currency
+  categoryId             String
+  description            String?
+  date                   DateTime
+  recurringTransactionId String?
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+  deletedAt              DateTime?
+  // Only meaningful when familyId IS NULL (a personal/individual
+  // transaction). Set ONCE, at creation time, to the family the creator
+  // belonged to at that moment IF their FamilyMember.shareIndividualTransactions
+  // was on then — a permanent snapshot, not a live re-evaluation of the
+  // toggle. Turning the toggle off later never hides transactions already
+  // stamped here; turning it on later never retroactively shares ones
+  // stamped null. See createTransaction (lib/server/actions/transactions.ts)
+  // for where this is set and family-transactions.ts for where it's read.
+  sharedFamilyId         String?
+  // Set (to "now") the moment a row is deliberately taken out of a family's
+  // view via removeTransactionFromFamily (lib/server/actions/transactions.ts)
+  // — WITHOUT deleting it (deletedAt untouched) and WITHOUT necessarily
+  // clearing sharedFamilyId's sibling meaning (both familyId/sharedFamilyId
+  // are already cleared by that action; this is a SEPARATE, permanent
+  // "this row was deliberately removed" marker). Its whole purpose:
+  // buildFamilyTransactionWhere's force-share arm (family-transactions.ts)
+  // re-derives family-wide visibility for a MEMBER's personal transactions
+  // purely from live membership + the owner's forceShareIndividualTransactions
+  // switch — with no marker at all, a row removed via
+  // removeTransactionFromFamily would silently reappear in the family view
+  // on the very next read once the switch is on, defeating the removal.
+  // Cleared back to null only if the row is ever re-shared into a family
+  // (familyId/sharedFamilyId set again) — there is no such path yet, but the
+  // field is named/reasoned so that whenever one is added, resetting this
+  // alongside it is the obvious, correct thing to do.
+  removedFromFamilyAt    DateTime?
+
+  user                 User                  @relation("TransactionOwner", fields: [userId], references: [id])
+  createdBy            User                  @relation("TransactionCreator", fields: [createdById], references: [id])
+  family               Family?               @relation(fields: [familyId], references: [id])
+  category             Category              @relation(fields: [categoryId], references: [id])
+  recurringTransaction RecurringTransaction? @relation(fields: [recurringTransactionId], references: [id])
+
+  @@index([userId, date])
+  @@index([familyId, date])
+  @@index([sharedFamilyId])
+  @@index([categoryId])
+  @@index([deletedAt])
+}
+
+model RecurringTransaction {
+  id          String             @id @default(cuid())
+  userId      String
+  familyId    String?
+  createdById String
+  type        TransactionType
+  amount      Decimal            @db.Decimal(14, 2)
+  currency    Currency
+  categoryId  String
+  description String?
+  frequency   RecurringFrequency
+  startDate   DateTime
+  nextRunDate DateTime
+  isActive    Boolean            @default(true)
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  user      User          @relation("RecurringTransactionOwner", fields: [userId], references: [id])
+  createdBy User          @relation("RecurringTransactionCreator", fields: [createdById], references: [id])
+  family    Family?       @relation(fields: [familyId], references: [id])
+  category  Category      @relation(fields: [categoryId], references: [id])
+  generated Transaction[]
+
+  @@index([nextRunDate, isActive])
+  @@index([userId])
+  @@index([familyId])
+}
+
+model Budget {
+  id          String       @id @default(cuid())
+  userId      String?
+  familyId    String?
+  categoryId  String
+  limitAmount Decimal      @db.Decimal(14, 2)
+  currency    Currency
+  period      BudgetPeriod @default(MONTHLY)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  user     User?    @relation(fields: [userId], references: [id])
+  family   Family?  @relation(fields: [familyId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@unique([userId, familyId, categoryId, period])
+  @@index([userId])
+  @@index([familyId])
+}

@@ -1,0 +1,482 @@
+{
+  "validation": {
+    "auth": {
+      "passwordMin": "Password must be at least 8 characters.",
+      "passwordMax": "Password must be at most 64 characters.",
+      "passwordTooLong": "Password is too long.",
+      "passwordLetter": "Password must contain at least one letter.",
+      "passwordDigit": "Password must contain at least one digit.",
+      "emailMax": "Email must be at most 255 characters.",
+      "emailFormat": "Enter a valid email address.",
+      "nameMin": "Name must be at least 2 characters.",
+      "nameMax": "Name must be at most 100 characters.",
+      "passwordRequired": "Password is required.",
+      "tokenInvalid": "Invalid link."
+    },
+    "settings": {
+      "currentPasswordRequired": "Current password is required.",
+      "languageInvalid": "Select a valid language.",
+      "currencyInvalid": "Select a valid currency."
+    },
+    "transaction": {
+      "amountFormat": "Enter a valid amount (at most 2 decimal places).",
+      "amountPositive": "Amount must be greater than 0.",
+      "amountMax": "Amount cannot exceed 999,999,999.99.",
+      "dateInvalid": "Enter a valid date.",
+      "dateNotFuture": "A transaction cannot be added for a future date.",
+      "descriptionMax": "Description must be at most 500 characters.",
+      "categoryRequired": "Select a valid category.",
+      "familyInvalid": "Select a valid family.",
+      "typeInvalid": "Select a valid transaction type.",
+      "currencyInvalid": "Select a valid currency.",
+      "idInvalid": "Invalid transaction id.",
+      "fromDateInvalid": "Enter a valid start date.",
+      "toDateInvalid": "Enter a valid end date.",
+      "filterDateNotFuture": "Cannot filter by a future date.",
+      "pageInvalid": "Enter a valid page number.",
+      "pageMin": "Page number must be 1 or greater.",
+      "pageMax": "Page number is too large.",
+      "dateRangeInvalid": "Start date cannot be after end date."
+    },
+    "budget": {
+      "amountFormat": "Enter a valid amount (at most 2 decimal places).",
+      "limitAmountPositive": "Limit amount must be greater than 0.",
+      "limitAmountMax": "Limit amount cannot exceed 999,999,999.99.",
+      "categoryRequired": "Select a valid category.",
+      "currencyInvalid": "Select a valid currency.",
+      "idInvalid": "Invalid budget limit id."
+    },
+    "category": {
+      "nameRequired": "Category name is required.",
+      "nameMax": "Category name must be at most 50 characters.",
+      "typeInvalid": "Select a valid type."
+    }
+  },
+  "errors": {
+    "unauthenticated": "You need to sign in to do this.",
+    "validationFailed": "Please check the information you entered.",
+    "rateLimited": "Too many attempts, please try again later.",
+    "wrongCurrentPassword": "Your current password is incorrect.",
+    "emailInUse": "Could not update your profile with this email. It may already be in use.",
+    "duplicateEmail": "Registration could not be completed with this information. You may already have an account — try signing in.",
+    "transactionNotFound": "Transaction not found.",
+    "categoryNotFound": "The selected category was not found.",
+    "transactionCategoryTypeMismatch": "The selected category doesn't match the transaction type.",
+    "invalidFilters": "Check your filters.",
+    "noFieldsToUpdate": "Enter a field to update.",
+    "notFamilyMemberTransaction": "You can't create a transaction for this family.",
+    "removeFromFamilyLocked": "The family owner has locked this feature. You can't remove this from the family view.",
+    "budgetNotFound": "Budget limit not found.",
+    "familyOwnerOnly": "Only the family owner can do this.",
+    "familyNotFound": "Family not found.",
+    "budgetDuplicate": "A limit already exists for this category — you can edit it.",
+    "budgetCategoryMustBeExpense": "A budget limit can only be created for expense categories.",
+    "categoryDuplicate": "A category with this name and type already exists.",
+    "notFamilyMemberCategory": "You can't create a category for this family.",
+    "resetTokenInvalid": "This link has expired or is invalid. Please request a new password reset.",
+    "verificationTokenInvalid": "This verification link has expired or is invalid. You can request a new verification email.",
+    "emailAlreadyVerified": "Your email address is already verified."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "somethingWrong": "Something went wrong. Please try again."
+  },
+  "app": {
+    "meta": {
+      "tagline": "Budget Tracking App",
+      "description": "Track your income and expenses in one place, set budget goals, and share them with your family."
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "transactions": "Transactions"
+    },
+    "header": {
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    },
+    "userMenu": {
+      "defaultUserName": "User",
+      "settings": "Settings",
+      "individualPlan": "Individual Plan Settings",
+      "familyPlan": "Family Plan Settings",
+      "signOut": "Sign out",
+      "familyRequiredTitle": "Family plan required",
+      "familyRequiredDescription": "You need to be part of a family plan to use this feature.",
+      "close": "Close",
+      "goToFamilyPlan": "Go to family plan"
+    },
+    "guestBanner": {
+      "title": "You're in guest mode",
+      "body": "your data is stored only in this browser. Create an account to keep it safe.",
+      "cta": "Sign up"
+    },
+    "emailVerificationBanner": {
+      "message": "You haven't verified your email address yet.",
+      "resend": "Resend verification email",
+      "resending": "Sending…",
+      "resendSuccess": "Sent! Check your inbox.",
+      "dismiss": "Dismiss"
+    }
+  },
+  "dashboard": {
+    "page": {
+      "title": "Dashboard"
+    },
+    "greetingWithName": "Welcome, {name}.",
+    "greetingPlain": "Welcome.",
+    "subtitle": "Income/expense tracking, budget goals, and reports will live here.",
+    "stub": {
+      "title": "Your dashboard is coming soon",
+      "body": "Summary cards, category breakdown, and recent transactions will be added in the next phase."
+    }
+  },
+  "transactions": {
+    "page": {
+      "title": "Transactions",
+      "subtitle": "Record, filter, and edit your income and expenses."
+    },
+    "planSwitcher": {
+      "individual": "Individual Plan",
+      "family": "Family Plan"
+    },
+    "newTransaction": "New transaction",
+    "categoriesLoadError": "Couldn't load categories: {message}",
+    "breakdownLoadError": "Couldn't load chart data.",
+    "list": {
+      "loadError": "Couldn't load transactions",
+      "loadErrorFallback": "Couldn't load transactions. Check your connection and try again.",
+      "retry": "Try again",
+      "emptyFilteredTitle": "No transactions match these filters",
+      "emptyFilteredBody": "Try a different date range or category.",
+      "clearFilters": "Clear filters",
+      "emptyTitle": "No transactions yet",
+      "emptyBody": "Add your first income or expense record to get started.",
+      "emptyCta": "Add your first transaction",
+      "columnDate": "Date",
+      "columnCategory": "Category",
+      "columnDescription": "Description",
+      "columnType": "Type",
+      "columnAmount": "Amount",
+      "typeIncome": "Income",
+      "typeExpense": "Expense",
+      "rowOptionsAria": "Transaction options",
+      "edit": "Edit",
+      "delete": "Delete",
+      "totalCount": "{count} transactions",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {totalPages}"
+    },
+    "filters": {
+      "periodLabel": "Period",
+      "day": "Daily",
+      "week": "Weekly",
+      "month": "Monthly",
+      "customRangeLabel": "Custom range",
+      "typeLabel": "Type",
+      "all": "All",
+      "income": "Income",
+      "expense": "Expense",
+      "categoryLabel": "Category",
+      "allCategories": "All categories",
+      "addNewCategory": "Add new category",
+      "from": "Start",
+      "to": "End",
+      "clear": "Clear filters"
+    },
+    "categoryDialog": {
+      "title": "Add new category",
+      "description": "Create your own income or expense category to use when adding or filtering transactions.",
+      "typeLabel": "Type",
+      "nameLabel": "Category name",
+      "namePlaceholder": "E.g. Sports, Health, Side income",
+      "add": "Add"
+    },
+    "customMonthly": {
+      "trigger": "Custom monthly range",
+      "dialogTitle": "Custom monthly range",
+      "dialogDescription": "Pick any day of the month as your reference point — you'll see your income/expenses from that day until today, recurring every month. You can save multiple ranges and optionally name them.",
+      "fallbackTitle": "Reference day doesn't exist this month",
+      "explanation": "Day {day} doesn't exist in {targetMonthLabel}, so {fallbackDateLabel} was used as the reference instead.",
+      "fallbackAcknowledge": "Got it, apply",
+      "empty": "No saved ranges yet — add your first one below.",
+      "unnamedPreset": "Day {day} of the month",
+      "fallbackHint": "shifts this month",
+      "addNewLabel": "Add new range",
+      "dayLabel": "Day",
+      "dayPlaceholder": "Day (15)",
+      "nameLabelOptional": "Name (optional)",
+      "namePlaceholder": "Name (optional, e.g. Payday cycle)",
+      "deleteAria": "Delete range",
+      "addAria": "Add",
+      "dayRangeError": "Enter a day between 1 and 31."
+    },
+    "monthPicker": {
+      "label": "View a specific month",
+      "selectedHint": "Showing income and expenses for <b>{month}</b>.",
+      "emptyHint": "Pick any past or future month to view transactions from that month."
+    },
+    "yearPicker": {
+      "label": "View a specific year",
+      "pickAria": "Pick a year from the calendar",
+      "view": "View",
+      "emptyHint": "Pick a year to view its total income/expenses.",
+      "computing": "Calculating the total for {year}…",
+      "loadError": "Couldn't load the year total.",
+      "totalLabel": "Total for <b>{year}</b>",
+      "netLabel": "Net: {value}",
+      "dialogTitle": "Select year",
+      "prevYears": "Previous years",
+      "nextYears": "Next years",
+      "clearFilter": "Clear filter"
+    },
+    "netCard": {
+      "title": "Net",
+      "loadError": "Couldn't calculate the net total."
+    },
+    "pieChart": {
+      "incomeTitle": "Income breakdown",
+      "expenseTitle": "Expense breakdown",
+      "incomeEmpty": "No income recorded in this range.",
+      "expenseEmpty": "No expenses recorded in this range.",
+      "other": "Other"
+    },
+    "export": {
+      "description": "Export your transactions based on the filter shown.",
+      "excel": "Download Excel",
+      "pdf": "Download PDF",
+      "noData": "No transactions to export.",
+      "truncated": "Too many transactions — only the first 5,000 records were exported.",
+      "failed": "Couldn't create the file. Please try again."
+    },
+    "form": {
+      "createTitle": "New transaction",
+      "editTitle": "Edit transaction",
+      "createDescription": "Add an income or expense record.",
+      "editDescription": "Update the transaction details.",
+      "typeLabel": "Type",
+      "income": "Income",
+      "expense": "Expense",
+      "amountLabel": "Amount",
+      "currencyLabel": "Currency",
+      "categoryLabel": "Category",
+      "categoryPlaceholder": "Select a category",
+      "noCategoriesForType": "No categories of this type.",
+      "dateLabel": "Date",
+      "descriptionLabel": "Description (optional)",
+      "descriptionPlaceholder": "E.g. Weekly grocery shopping",
+      "submitCreate": "Add transaction",
+      "submitEdit": "Save changes"
+    },
+    "deleteDialog": {
+      "title": "Delete transaction",
+      "description": "Are you sure you want to delete <b>{label}</b>? It will be removed from your list.",
+      "confirm": "Yes, delete"
+    },
+    "trend": {
+      "metaTitle": "Daily Flow",
+      "fallbackSubtitle": "The daily breakdown of your selected range.",
+      "back": "Back to transactions",
+      "heading": "{flow} — {granularity} Flow",
+      "subtitle": "The {granularity} breakdown of your {flow} for the selected range.",
+      "loadError": "Couldn't load the data.",
+      "granularityDay": "daily",
+      "granularityMonth": "monthly",
+      "granularityYear": "yearly",
+      "flowIncomeLower": "income",
+      "flowExpenseLower": "expenses",
+      "flowIncomeNoun": "income",
+      "flowExpenseNoun": "expense",
+      "rangeLabel": "Range",
+      "presetLast7": "Last 7 days",
+      "presetLast30": "Last 30 days",
+      "presetThisMonth": "This month",
+      "presetThisYear": "This year",
+      "presetYearly": "Yearly",
+      "viewChooserLabel": "Chart view",
+      "viewDay": "Daily",
+      "viewMonth": "Monthly",
+      "clearFilter": "Clear filter",
+      "total": "Total: {value}",
+      "noData": "No {flow} recorded in this range.",
+      "viewLabel": "View: {view}"
+    }
+  },
+  "budgets": {
+    "page": {
+      "title": "My Budget Limits",
+      "back": "Back to dashboard",
+      "subtitle": "Set a monthly spending limit for expense categories and see it here as you approach it."
+    },
+    "list": {
+      "loadErrorTitle": "Couldn't load budget limits",
+      "loadErrorFallback": "Couldn't load budget limits. Check your connection and try again.",
+      "retry": "Try again",
+      "categoriesLoadError": "Couldn't load categories: {message}",
+      "newLimit": "Add new limit",
+      "emptyTitle": "You haven't set any budget limits yet.",
+      "emptyBodyManage": "Pick an expense category and set a monthly spending limit to get started.",
+      "emptyBodyView": "Limits will appear here once the family owner sets them.",
+      "emptyCta": "Add your first limit",
+      "monthlyLimit": "Monthly limit",
+      "optionsAria": "{category} limit options",
+      "edit": "Edit",
+      "delete": "Delete",
+      "percentageUsed": "{percent}% used",
+      "progressAria": "{category} budget usage, {percent} percent"
+    },
+    "status": {
+      "ok": "Normal",
+      "warning": "Warning",
+      "exceeded": "Exceeded"
+    },
+    "formDialog": {
+      "createTitle": "New budget limit",
+      "editTitle": "Edit limit",
+      "createDescription": "Set a monthly spending limit for an expense category.",
+      "editDescription": "Update the monthly limit for {category}.",
+      "categoryLabel": "Category",
+      "categoryPlaceholder": "Select a category",
+      "noCategoriesLeft": "You already have a limit for every expense category.",
+      "categoryLocked": "A limit's category can't be changed later — create a separate limit for a new category.",
+      "amountLabel": "Monthly limit amount",
+      "currencyLabel": "Currency",
+      "submitCreate": "Add limit",
+      "submitEdit": "Save changes"
+    },
+    "deleteDialog": {
+      "title": "Delete budget limit",
+      "description": "Are you sure you want to delete the monthly limit you set for <b>{category}</b>? This can't be undone.",
+      "confirm": "Yes, delete"
+    }
+  },
+  "settings": {
+    "page": {
+      "title": "Settings",
+      "back": "Back to dashboard",
+      "subtitle": "Manage your account details, password, and preferences here.",
+      "loadErrorTitle": "Couldn't load settings",
+      "retry": "Try again"
+    },
+    "account": {
+      "title": "Account details",
+      "description": "Update your name and email address.",
+      "nameLabel": "Full name",
+      "emailLabel": "Email",
+      "save": "Save",
+      "success": "Your account details have been updated."
+    },
+    "password": {
+      "title": "Change password",
+      "description": "Verify your current password and set a new one to keep your account secure.",
+      "currentLabel": "Current password",
+      "newLabel": "New password",
+      "confirmLabel": "New password (again)",
+      "hint": "At least 8 characters, with a letter and a digit.",
+      "submit": "Change password",
+      "success": "Your password has been changed.",
+      "confirmRequired": "Enter your new password again.",
+      "mismatch": "Passwords don't match."
+    },
+    "preferences": {
+      "title": "Preferences",
+      "description": "Manage your language and currency preferences here.",
+      "languageLabel": "Language",
+      "languagePlaceholder": "Select a language",
+      "currencyLabel": "Currency",
+      "currencyPlaceholder": "Select a currency",
+      "save": "Save",
+      "success": "Your preferences have been saved."
+    },
+    "deleteAccount": {
+      "title": "Delete account",
+      "description": "Permanently delete your account and all your data. This action cannot be undone.",
+      "openButton": "Delete my account",
+      "dialogTitle": "Permanently delete your account",
+      "dialogDescription": "This action cannot be undone. Your account, all your transactions, budgets, recurring transactions, and any family membership will be permanently deleted. Enter your password to continue.",
+      "passwordLabel": "Your password",
+      "passwordRequired": "Please enter your password.",
+      "confirmButton": "Permanently delete my account"
+    }
+  },
+  "auth": {
+    "backHome": "Back to home",
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Enter your details to access your account.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "name@example.com",
+      "passwordLabel": "Password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up",
+      "invalidCredentials": "Incorrect email or password."
+    },
+    "register": {
+      "metaTitle": "Sign up",
+      "heading": "Create an account",
+      "subtitle": "Start tracking your budget in seconds.",
+      "nameLabel": "Full name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "name@example.com",
+      "passwordLabel": "Password",
+      "passwordHint": "At least 8 characters, with a letter and a digit.",
+      "confirmPasswordLabel": "Password (again)",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "confirmRequired": "Enter your password again.",
+      "mismatch": "Passwords don't match.",
+      "autoSignInFailed": "Your account was created, but automatic sign-in failed. Please try signing in."
+    },
+    "resetPassword": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email address and we'll send you a reset link.",
+      "notice": "We've sent a link to your email that lets you reset your password. Check your inbox (and spam folder).",
+      "emailLabel": "Email",
+      "emailPlaceholder": "name@example.com",
+      "submit": "Send",
+      "backToLogin": "Back to sign in"
+    },
+    "brandPanel": {
+      "tagline": "Keep a finger on the pulse of your money.",
+      "footer": "Your account and data belong to you alone.",
+      "features": {
+        "budget": {
+          "title": "Budget goals",
+          "description": "Set limits per category and spot overspending before it happens."
+        },
+        "recurring": {
+          "title": "Recurring transactions",
+          "description": "Automatically record regular payments like rent or subscriptions."
+        },
+        "family": {
+          "title": "Share with family",
+          "description": "Manage a shared budget together with your family."
+        }
+      }
+    },
+    "passwordVisibility": {
+      "show": "Show password",
+      "hide": "Hide password"
+    },
+    "newPassword": {
+      "title": "Set a new password",
+      "subtitle": "Enter a new password for your account.",
+      "passwordLabel": "New password",
+      "confirmPasswordLabel": "New password (again)",
+      "confirmRequired": "Please confirm your password.",
+      "mismatch": "Passwords don't match.",
+      "submit": "Update password",
+      "success": "Your password has been updated. You can now sign in with your new password.",
+      "goToLogin": "Sign in",
+      "backToLogin": "Back to sign in"
+    },
+    "verifyEmail": {
+      "title": "Email verification",
+      "success": "Your email address has been verified. Thank you!",
+      "goToDashboard": "Go to dashboard"
+    }
+  }
+}

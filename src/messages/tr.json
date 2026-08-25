@@ -1,0 +1,482 @@
+{
+  "validation": {
+    "auth": {
+      "passwordMin": "Şifre en az 8 karakter olmalı.",
+      "passwordMax": "Şifre en fazla 64 karakter olabilir.",
+      "passwordTooLong": "Şifre çok uzun.",
+      "passwordLetter": "Şifre en az bir harf içermeli.",
+      "passwordDigit": "Şifre en az bir rakam içermeli.",
+      "emailMax": "E-posta en fazla 255 karakter olabilir.",
+      "emailFormat": "Geçerli bir e-posta adresi girin.",
+      "nameMin": "İsim en az 2 karakter olmalı.",
+      "nameMax": "İsim en fazla 100 karakter olabilir.",
+      "passwordRequired": "Şifre gerekli.",
+      "tokenInvalid": "Geçersiz bağlantı."
+    },
+    "settings": {
+      "currentPasswordRequired": "Mevcut şifre gerekli.",
+      "languageInvalid": "Geçerli bir dil seçin.",
+      "currencyInvalid": "Geçerli bir para birimi seçin."
+    },
+    "transaction": {
+      "amountFormat": "Geçerli bir tutar girin (en fazla 2 ondalık basamak).",
+      "amountPositive": "Tutar 0'dan büyük olmalı.",
+      "amountMax": "Tutar 999.999.999,99 değerini aşamaz.",
+      "dateInvalid": "Geçerli bir tarih girin.",
+      "dateNotFuture": "Gelecek bir tarih için işlem eklenemez.",
+      "descriptionMax": "Açıklama en fazla 500 karakter olabilir.",
+      "categoryRequired": "Geçerli bir kategori seçin.",
+      "familyInvalid": "Geçerli bir aile seçin.",
+      "typeInvalid": "Geçerli bir işlem türü seçin.",
+      "currencyInvalid": "Geçerli bir para birimi seçin.",
+      "idInvalid": "Geçersiz işlem kimliği.",
+      "fromDateInvalid": "Geçerli bir başlangıç tarihi girin.",
+      "toDateInvalid": "Geçerli bir bitiş tarihi girin.",
+      "filterDateNotFuture": "Gelecek bir tarih için filtreleme yapılamaz.",
+      "pageInvalid": "Geçerli bir sayfa numarası girin.",
+      "pageMin": "Sayfa numarası 1 veya daha büyük olmalı.",
+      "pageMax": "Sayfa numarası çok büyük.",
+      "dateRangeInvalid": "Başlangıç tarihi bitiş tarihinden sonra olamaz."
+    },
+    "budget": {
+      "amountFormat": "Geçerli bir tutar girin (en fazla 2 ondalık basamak).",
+      "limitAmountPositive": "Limit tutarı 0'dan büyük olmalı.",
+      "limitAmountMax": "Limit tutarı 999.999.999,99 değerini aşamaz.",
+      "categoryRequired": "Geçerli bir kategori seçin.",
+      "currencyInvalid": "Geçerli bir para birimi seçin.",
+      "idInvalid": "Geçersiz bütçe limiti kimliği."
+    },
+    "category": {
+      "nameRequired": "Kategori adı gerekli.",
+      "nameMax": "Kategori adı en fazla 50 karakter olabilir.",
+      "typeInvalid": "Geçerli bir tür seçin."
+    }
+  },
+  "errors": {
+    "unauthenticated": "Bu işlem için giriş yapmanız gerekiyor.",
+    "validationFailed": "Girdiğiniz bilgileri kontrol edin.",
+    "rateLimited": "Çok fazla deneme, lütfen daha sonra tekrar deneyin.",
+    "wrongCurrentPassword": "Mevcut şifreniz yanlış.",
+    "emailInUse": "Bu e-posta adresiyle profil güncellenemedi. Zaten kullanımda olabilir.",
+    "duplicateEmail": "Bu bilgilerle kayıt tamamlanamadı. Zaten bir hesabınız olabilir — giriş yapmayı deneyin.",
+    "transactionNotFound": "İşlem bulunamadı.",
+    "categoryNotFound": "Seçilen kategori bulunamadı.",
+    "transactionCategoryTypeMismatch": "Seçilen kategori, işlem türüyle uyuşmuyor.",
+    "invalidFilters": "Filtreleri kontrol edin.",
+    "noFieldsToUpdate": "Güncellenecek bir alan girin.",
+    "notFamilyMemberTransaction": "Bu aile için işlem oluşturamazsınız.",
+    "removeFromFamilyLocked": "Ailenin sahibi bu özelliği kilitledi. Bu işlemi aile görünümünden kaldıramazsın.",
+    "budgetNotFound": "Bütçe limiti bulunamadı.",
+    "familyOwnerOnly": "Bu işlemi yalnızca ailenin sahibi yapabilir.",
+    "familyNotFound": "Aile bulunamadı.",
+    "budgetDuplicate": "Bu kategori için zaten bir limit var, düzenleyebilirsiniz.",
+    "budgetCategoryMustBeExpense": "Bütçe limiti yalnızca gider kategorileri için oluşturulabilir.",
+    "categoryDuplicate": "Bu isimde ve türde bir kategori zaten var.",
+    "notFamilyMemberCategory": "Bu aile için kategori oluşturamazsınız.",
+    "resetTokenInvalid": "Bu bağlantının süresi dolmuş ya da geçersiz. Lütfen yeni bir şifre sıfırlama isteği gönderin.",
+    "verificationTokenInvalid": "Bu doğrulama bağlantısının süresi dolmuş ya da geçersiz. Yeni bir doğrulama e-postası isteyebilirsiniz.",
+    "emailAlreadyVerified": "E-posta adresiniz zaten doğrulanmış."
+  },
+  "common": {
+    "cancel": "Vazgeç",
+    "somethingWrong": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+  },
+  "app": {
+    "meta": {
+      "tagline": "Bütçe Takip Uygulaması",
+      "description": "Gelir ve giderlerinizi tek yerden takip edin, bütçe hedefleri koyun, ailenizle paylaşın."
+    },
+    "nav": {
+      "dashboard": "Panel",
+      "transactions": "İşlemler"
+    },
+    "header": {
+      "signIn": "Giriş yap",
+      "signUp": "Kayıt ol"
+    },
+    "userMenu": {
+      "defaultUserName": "Kullanıcı",
+      "settings": "Ayarlar",
+      "individualPlan": "Bireysel Plan Ayarları",
+      "familyPlan": "Aile Planı Ayarları",
+      "signOut": "Çıkış yap",
+      "familyRequiredTitle": "Aile planı gerekli",
+      "familyRequiredDescription": "Bu özelliği kullanabilmeniz için herhangi bir aile planına dahil olmanız gerek.",
+      "close": "Kapat",
+      "goToFamilyPlan": "Aile planına git"
+    },
+    "guestBanner": {
+      "title": "Misafir modundasınız",
+      "body": "verileriniz sadece bu tarayıcıda saklanır. Hesap oluşturursanız verileriniz güvenle saklanır.",
+      "cta": "Kayıt ol"
+    },
+    "emailVerificationBanner": {
+      "message": "E-posta adresinizi henüz doğrulamadınız.",
+      "resend": "Doğrulama e-postasını yeniden gönder",
+      "resending": "Gönderiliyor…",
+      "resendSuccess": "Gönderildi! Gelen kutunuzu kontrol edin.",
+      "dismiss": "Kapat"
+    }
+  },
+  "dashboard": {
+    "page": {
+      "title": "Panel"
+    },
+    "greetingWithName": "Hoş geldin, {name}.",
+    "greetingPlain": "Hoş geldin.",
+    "subtitle": "Gelir/gider takibi, bütçe hedefleri ve raporlar burada olacak.",
+    "stub": {
+      "title": "Panel yakında burada",
+      "body": "Özet kartları, kategori dağılımı ve son işlemler bir sonraki aşamada eklenecek."
+    }
+  },
+  "transactions": {
+    "page": {
+      "title": "İşlemler",
+      "subtitle": "Gelir ve giderlerini kaydet, filtrele ve düzenle."
+    },
+    "planSwitcher": {
+      "individual": "Bireysel Plan",
+      "family": "Aile Planı"
+    },
+    "newTransaction": "Yeni işlem",
+    "categoriesLoadError": "Kategoriler yüklenemedi: {message}",
+    "breakdownLoadError": "Grafik verisi yüklenemedi.",
+    "list": {
+      "loadError": "İşlemler yüklenemedi",
+      "loadErrorFallback": "İşlemler yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.",
+      "retry": "Tekrar dene",
+      "emptyFilteredTitle": "Bu filtrelerle eşleşen işlem yok",
+      "emptyFilteredBody": "Farklı bir tarih aralığı veya kategori deneyin.",
+      "clearFilters": "Filtreleri temizle",
+      "emptyTitle": "Henüz işlem yok",
+      "emptyBody": "İlk gelir veya gider kaydını ekleyerek başla.",
+      "emptyCta": "İlk işlemini ekle",
+      "columnDate": "Tarih",
+      "columnCategory": "Kategori",
+      "columnDescription": "Açıklama",
+      "columnType": "Tür",
+      "columnAmount": "Tutar",
+      "typeIncome": "Gelir",
+      "typeExpense": "Gider",
+      "rowOptionsAria": "İşlem seçenekleri",
+      "edit": "Düzenle",
+      "delete": "Sil",
+      "totalCount": "{count} işlem",
+      "previous": "Önceki",
+      "next": "Sonraki",
+      "pageOf": "Sayfa {page} / {totalPages}"
+    },
+    "filters": {
+      "periodLabel": "Dönem",
+      "day": "Günlük",
+      "week": "Haftalık",
+      "month": "Aylık",
+      "customRangeLabel": "Kişiselleştirilmiş aralık",
+      "typeLabel": "Tür",
+      "all": "Tümü",
+      "income": "Gelir",
+      "expense": "Gider",
+      "categoryLabel": "Kategori",
+      "allCategories": "Tüm kategoriler",
+      "addNewCategory": "Yeni kategori ekle",
+      "from": "Başlangıç",
+      "to": "Bitiş",
+      "clear": "Filtreleri temizle"
+    },
+    "categoryDialog": {
+      "title": "Yeni kategori ekle",
+      "description": "Kendi gelir veya gider kategorini oluştur, işlem eklerken ve filtrelerken kullanılsın.",
+      "typeLabel": "Tür",
+      "nameLabel": "Kategori adı",
+      "namePlaceholder": "Örn. Spor, Sağlık, Ek Gelir",
+      "add": "Ekle"
+    },
+    "customMonthly": {
+      "trigger": "Kişiselleştirilmiş aylık aralık",
+      "dialogTitle": "Kişiselleştirilmiş aylık aralık",
+      "dialogDescription": "Ayın herhangi bir gününü referans noktası seçin — o günden bugüne kadar olan gelir/giderlerinizi görürsünüz, her ay için geçerli olur. Birden fazla aralık kaydedip isteğe bağlı isimlendirebilirsiniz.",
+      "fallbackTitle": "Referans gün bu ayda yok",
+      "explanation": "Ayın {day}. günü {targetMonthLabel} ayında yok, bu yüzden {fallbackDateLabel} referans alındı.",
+      "fallbackAcknowledge": "Anladım, uygula",
+      "empty": "Henüz kaydedilmiş bir aralık yok — aşağıdan ilkini ekleyin.",
+      "unnamedPreset": "Ayın {day}'i",
+      "fallbackHint": "bu ay kaydırılabilir",
+      "addNewLabel": "Yeni aralık ekle",
+      "dayLabel": "Gün",
+      "dayPlaceholder": "Gün (15)",
+      "nameLabelOptional": "İsim (opsiyonel)",
+      "namePlaceholder": "İsim (opsiyonel, örn. Maaş dönemi)",
+      "deleteAria": "Aralığı sil",
+      "addAria": "Ekle",
+      "dayRangeError": "1 ile 31 arasında bir gün girin."
+    },
+    "monthPicker": {
+      "label": "Belirli bir ayı görüntüle",
+      "selectedHint": "<b>{month}</b> ayındaki gelir ve giderler gösteriliyor.",
+      "emptyHint": "Geçmiş veya gelecekteki herhangi bir ayı seçip o aya ait işlemleri görüntüle."
+    },
+    "yearPicker": {
+      "label": "Belirli bir yılı görüntüle",
+      "pickAria": "Takvimden yıl seç",
+      "view": "Görüntüle",
+      "emptyHint": "Bir yıl seçip o yıla ait toplam gelir/gider görüntüleyin.",
+      "computing": "{year} yılı toplamı hesaplanıyor…",
+      "loadError": "Yıl toplamı yüklenemedi.",
+      "totalLabel": "<b>{year}</b> yılı toplamı",
+      "netLabel": "Net: {value}",
+      "dialogTitle": "Yıl seç",
+      "prevYears": "Önceki yıllar",
+      "nextYears": "Sonraki yıllar",
+      "clearFilter": "Filtreyi temizle"
+    },
+    "netCard": {
+      "title": "Net",
+      "loadError": "Net hesaplanamadı."
+    },
+    "pieChart": {
+      "incomeTitle": "Gelir dağılımı",
+      "expenseTitle": "Gider dağılımı",
+      "incomeEmpty": "Bu aralıkta gelir kaydı yok.",
+      "expenseEmpty": "Bu aralıkta gider kaydı yok.",
+      "other": "Diğer"
+    },
+    "export": {
+      "description": "Görüntülenen filtreye göre işlemlerini dışa aktar.",
+      "excel": "Excel'e indir",
+      "pdf": "PDF indir",
+      "noData": "Dışa aktarılacak işlem yok.",
+      "truncated": "İşlem sayısı çok fazla olduğu için sadece ilk 5000 kayıt dışa aktarıldı.",
+      "failed": "Dosya oluşturulamadı. Lütfen tekrar deneyin."
+    },
+    "form": {
+      "createTitle": "Yeni işlem",
+      "editTitle": "İşlemi düzenle",
+      "createDescription": "Bir gelir veya gider kaydı ekle.",
+      "editDescription": "İşlem bilgilerini güncelle.",
+      "typeLabel": "Tür",
+      "income": "Gelir",
+      "expense": "Gider",
+      "amountLabel": "Tutar",
+      "currencyLabel": "Para birimi",
+      "categoryLabel": "Kategori",
+      "categoryPlaceholder": "Kategori seç",
+      "noCategoriesForType": "Bu türde kategori yok.",
+      "dateLabel": "Tarih",
+      "descriptionLabel": "Açıklama (opsiyonel)",
+      "descriptionPlaceholder": "Örn. Haftalık market alışverişi",
+      "submitCreate": "İşlemi ekle",
+      "submitEdit": "Değişiklikleri kaydet"
+    },
+    "deleteDialog": {
+      "title": "İşlemi sil",
+      "description": "<b>{label}</b> kaydını silmek istediğinize emin misiniz? Kayıt listenizden kaldırılır.",
+      "confirm": "Evet, sil"
+    },
+    "trend": {
+      "metaTitle": "Günlük Akış",
+      "fallbackSubtitle": "Seçtiğin aralığın günlük dağılımı.",
+      "back": "İşlemlere dön",
+      "heading": "{flow} — {granularity} Akış",
+      "subtitle": "{flow} seçtiğin aralıktaki {granularity} dağılımı.",
+      "loadError": "Veriler yüklenemedi.",
+      "granularityDay": "günlük",
+      "granularityMonth": "aylık",
+      "granularityYear": "yıllık",
+      "flowIncomeLower": "gelirlerinin",
+      "flowExpenseLower": "giderlerinin",
+      "flowIncomeNoun": "gelir",
+      "flowExpenseNoun": "gider",
+      "rangeLabel": "Aralık",
+      "presetLast7": "Son 7 gün",
+      "presetLast30": "Son 30 gün",
+      "presetThisMonth": "Bu ay",
+      "presetThisYear": "Bu yıl",
+      "presetYearly": "Yıllık",
+      "viewChooserLabel": "Grafik görünümü",
+      "viewDay": "Günlük",
+      "viewMonth": "Aylık",
+      "clearFilter": "Filtreyi temizle",
+      "total": "Toplam: {value}",
+      "noData": "Bu aralıkta {flow} kaydı yok.",
+      "viewLabel": "Görünüm: {view}"
+    }
+  },
+  "budgets": {
+    "page": {
+      "title": "Bütçe Limitlerim",
+      "back": "Panele dön",
+      "subtitle": "Gider kategorilerine aylık harcama limiti koy, aşıma yaklaşınca burada gör."
+    },
+    "list": {
+      "loadErrorTitle": "Bütçe limitleri yüklenemedi",
+      "loadErrorFallback": "Bütçe limitleri yüklenemedi. Bağlantınızı kontrol edip tekrar deneyin.",
+      "retry": "Tekrar dene",
+      "categoriesLoadError": "Kategoriler yüklenemedi: {message}",
+      "newLimit": "Yeni limit ekle",
+      "emptyTitle": "Henüz bir bütçe limiti belirlemediniz.",
+      "emptyBodyManage": "Bir gider kategorisi seçip aylık harcama limiti koyarak başlayabilirsin.",
+      "emptyBodyView": "Limitler ailenin sahibi tarafından belirlendiğinde burada görünecek.",
+      "emptyCta": "İlk limitini ekle",
+      "monthlyLimit": "Aylık limit",
+      "optionsAria": "{category} limiti seçenekleri",
+      "edit": "Düzenle",
+      "delete": "Sil",
+      "percentageUsed": "%{percent} kullanıldı",
+      "progressAria": "{category} bütçe kullanımı, yüzde {percent}"
+    },
+    "status": {
+      "ok": "Normal",
+      "warning": "Dikkat",
+      "exceeded": "Aşıldı"
+    },
+    "formDialog": {
+      "createTitle": "Yeni bütçe limiti",
+      "editTitle": "Limiti düzenle",
+      "createDescription": "Bir gider kategorisi için aylık harcama limiti belirle.",
+      "editDescription": "{category} kategorisinin aylık limitini güncelle.",
+      "categoryLabel": "Kategori",
+      "categoryPlaceholder": "Kategori seç",
+      "noCategoriesLeft": "Tüm gider kategorilerin için zaten bir limit var.",
+      "categoryLocked": "Bir limitin kategorisi sonradan değiştirilemez — yeni bir kategori için ayrı bir limit oluştur.",
+      "amountLabel": "Aylık limit tutarı",
+      "currencyLabel": "Para birimi",
+      "submitCreate": "Limiti ekle",
+      "submitEdit": "Değişiklikleri kaydet"
+    },
+    "deleteDialog": {
+      "title": "Bütçe limitini sil",
+      "description": "<b>{category}</b> kategorisi için belirlediğin aylık limiti silmek istediğine emin misin? Bu işlem geri alınamaz.",
+      "confirm": "Evet, sil"
+    }
+  },
+  "settings": {
+    "page": {
+      "title": "Ayarlar",
+      "back": "Panele dön",
+      "subtitle": "Hesap bilgilerinizi, şifrenizi ve tercihlerinizi buradan yönetin.",
+      "loadErrorTitle": "Ayarlar yüklenemedi",
+      "retry": "Tekrar dene"
+    },
+    "account": {
+      "title": "Hesap bilgileri",
+      "description": "Ad soyad ve e-posta adresinizi güncelleyin.",
+      "nameLabel": "Ad soyad",
+      "emailLabel": "E-posta",
+      "save": "Kaydet",
+      "success": "Hesap bilgileriniz güncellendi."
+    },
+    "password": {
+      "title": "Şifre değiştir",
+      "description": "Hesabınızı korumak için mevcut şifrenizi doğrulayıp yeni bir şifre belirleyin.",
+      "currentLabel": "Mevcut şifre",
+      "newLabel": "Yeni şifre",
+      "confirmLabel": "Yeni şifre (tekrar)",
+      "hint": "En az 8 karakter, bir harf ve bir rakam içermeli.",
+      "submit": "Şifreyi değiştir",
+      "success": "Şifreniz değiştirildi.",
+      "confirmRequired": "Yeni şifreyi tekrar girin.",
+      "mismatch": "Şifreler eşleşmiyor."
+    },
+    "preferences": {
+      "title": "Tercihler",
+      "description": "Dil ve para birimi tercihlerinizi buradan yönetebilirsiniz.",
+      "languageLabel": "Dil",
+      "languagePlaceholder": "Dil seç",
+      "currencyLabel": "Para birimi",
+      "currencyPlaceholder": "Para birimi seç",
+      "save": "Kaydet",
+      "success": "Tercihleriniz kaydedildi."
+    },
+    "deleteAccount": {
+      "title": "Hesabı sil",
+      "description": "Hesabınızı ve tüm verilerinizi kalıcı olarak silin. Bu işlem geri alınamaz.",
+      "openButton": "Hesabımı sil",
+      "dialogTitle": "Hesabını kalıcı olarak sil",
+      "dialogDescription": "Bu işlem geri alınamaz. Hesabınız, tüm işlemleriniz, bütçeleriniz, tekrarlayan işlemleriniz ve varsa aile üyeliğiniz kalıcı olarak silinecek. Devam etmek için şifrenizi girin.",
+      "passwordLabel": "Şifreniz",
+      "passwordRequired": "Şifrenizi girin.",
+      "confirmButton": "Hesabımı kalıcı olarak sil"
+    }
+  },
+  "auth": {
+    "backHome": "Anasayfaya dön",
+    "login": {
+      "title": "Giriş yap",
+      "subtitle": "Hesabınıza erişmek için bilgilerinizi girin.",
+      "emailLabel": "E-posta",
+      "emailPlaceholder": "ad@ornek.com",
+      "passwordLabel": "Şifre",
+      "forgotPassword": "Şifremi unuttum",
+      "submit": "Giriş yap",
+      "noAccount": "Hesabınız yok mu?",
+      "signUpLink": "Kayıt olun",
+      "invalidCredentials": "E-posta veya şifre hatalı."
+    },
+    "register": {
+      "metaTitle": "Kayıt ol",
+      "heading": "Hesap oluştur",
+      "subtitle": "Bütçenizi takip etmeye birkaç saniyede başlayın.",
+      "nameLabel": "Ad soyad",
+      "emailLabel": "E-posta",
+      "emailPlaceholder": "ad@ornek.com",
+      "passwordLabel": "Şifre",
+      "passwordHint": "En az 8 karakter, bir harf ve bir rakam içermeli.",
+      "confirmPasswordLabel": "Şifre (tekrar)",
+      "submit": "Hesap oluştur",
+      "haveAccount": "Zaten hesabınız var mı?",
+      "signInLink": "Giriş yapın",
+      "confirmRequired": "Şifreyi tekrar girin.",
+      "mismatch": "Şifreler eşleşmiyor.",
+      "autoSignInFailed": "Hesabınız oluşturuldu ama otomatik giriş başarısız oldu. Lütfen giriş yapmayı deneyin."
+    },
+    "resetPassword": {
+      "title": "Şifreni sıfırla",
+      "subtitle": "E-posta adresinizi girin, sıfırlama bağlantısı gönderelim.",
+      "notice": "E-posta adresinize gönderdiğimiz bağlantıyla şifrenizi sıfırlayabilirsiniz. Gelen kutunuzu (ve spam klasörünü) kontrol edin.",
+      "emailLabel": "E-posta",
+      "emailPlaceholder": "ad@ornek.com",
+      "submit": "Gönder",
+      "backToLogin": "Giriş sayfasına dön"
+    },
+    "brandPanel": {
+      "tagline": "Paranızın nabzını her an tutun.",
+      "footer": "Hesabınız ve verileriniz yalnızca size ait.",
+      "features": {
+        "budget": {
+          "title": "Bütçe hedefleri",
+          "description": "Kategori bazında limit koyun, aşımları önceden görün."
+        },
+        "recurring": {
+          "title": "Tekrarlayan işlemler",
+          "description": "Kira, abonelik gibi düzenli ödemeleri otomatik kaydedin."
+        },
+        "family": {
+          "title": "Aile ile paylaşım",
+          "description": "Ortak bütçeyi ailenizle birlikte yönetin."
+        }
+      }
+    },
+    "passwordVisibility": {
+      "show": "Şifreyi göster",
+      "hide": "Şifreyi gizle"
+    },
+    "newPassword": {
+      "title": "Yeni şifre belirle",
+      "subtitle": "Hesabınız için yeni bir şifre girin.",
+      "passwordLabel": "Yeni şifre",
+      "confirmPasswordLabel": "Yeni şifre (tekrar)",
+      "confirmRequired": "Şifre tekrarını girin.",
+      "mismatch": "Şifreler eşleşmiyor.",
+      "submit": "Şifreyi güncelle",
+      "success": "Şifreniz güncellendi. Şimdi yeni şifrenizle giriş yapabilirsiniz.",
+      "goToLogin": "Giriş yap",
+      "backToLogin": "Giriş sayfasına dön"
+    },
+    "verifyEmail": {
+      "title": "E-posta doğrulama",
+      "success": "E-posta adresiniz doğrulandı. Teşekkürler!",
+      "goToDashboard": "Panele git"
+    }
+  }
+}

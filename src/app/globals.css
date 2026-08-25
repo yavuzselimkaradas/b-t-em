@@ -1,26 +1,211 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-fraunces);
+  --font-heading: var(--font-sans);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-soft-foreground: var(--brand-soft-foreground);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-deep-foreground: var(--brand-deep-foreground);
+  --color-income: var(--income);
+  --color-income-soft: var(--income-soft);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft: var(--warning-soft);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Brand — a deep, confident forest green (money/growth, read as serious
+     rather than "fintech neon") paired with warm paper neutrals. See the
+     frontend-developer design notes: the ledger-panel motif reuses
+     --brand-deep as its background and --brand-deep-foreground for the
+     ruled-line texture. */
+  --brand: #1e5a45;
+  --brand-foreground: #fbfaf6;
+  --brand-soft: #e1eee6;
+  --brand-soft-foreground: #163f30;
+  --brand-deep: #10241c;
+  --brand-deep-foreground: #f4f1e8;
+
+  /* Income/expense pair (proje dokümanı §8): deliberately a brighter, more
+     saturated green than --brand so a "gelir" figure never reads as just
+     another brand-colored button. Expense reuses --destructive — a negative
+     amount and an error share the same "pay attention" register. Both are
+     always paired with a directional icon (ArrowUpRight/ArrowDownRight) in
+     the UI, never color alone. */
+  --income: #15803d;
+  --income-soft: #dcfce7;
+
+  /* Budget-limit "warning" status (proje dokümanı §6/§8, Bütçe Limitleri):
+     an amber third register alongside income/destructive for "yaklaşıyor,
+     henüz aşmadı" — reserved for that meaning, never reused as a generic
+     accent. Contrast-checked (dataviz skill) against --background/--card:
+     ~4.85:1, matching --income's own ratio at the same spot. Always paired
+     with an icon (TriangleAlert), never color alone. */
+  --warning: #b45309;
+  --warning-foreground: #fffbeb;
+  --warning-soft: #fef3c7;
+
+  --background: #fcfbf8;
+  --foreground: #171b1f;
+  --card: #ffffff;
+  --card-foreground: #171b1f;
+  --popover: #ffffff;
+  --popover-foreground: #171b1f;
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
+  --secondary: #efede5;
+  --secondary-foreground: #171b1f;
+  --muted: #f1efe7;
+  --muted-foreground: #706c61;
+  --accent: var(--brand-soft);
+  --accent-foreground: var(--brand-soft-foreground);
+  --destructive: #b3392b;
+  --border: #e7e2d5;
+  --input: #e7e2d5;
+  --ring: var(--brand);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --brand: #4fa184;
+  --brand-foreground: #0c1613;
+  --brand-soft: #1e332c;
+  --brand-soft-foreground: #b9e1cc;
+  --brand-deep: #0a1512;
+  --brand-deep-foreground: #f2efe6;
+
+  --income: #4ade80;
+  --income-soft: #14532d;
+
+  /* Same warning register as :root, re-stepped for the dark surface
+     (~10.9:1 against --background, ~5.4:1 for --warning-soft's own text
+     pairing) — not an automatic filter-flip of the light values. */
+  --warning: #fbbf24;
+  --warning-foreground: #3d2408;
+  --warning-soft: #78350f;
+
+  --background: #10161a;
+  --foreground: #f2efe6;
+  --card: #161f1d;
+  --card-foreground: #f2efe6;
+  --popover: #161f1d;
+  --popover-foreground: #f2efe6;
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
+  --secondary: #222b28;
+  --secondary-foreground: #f2efe6;
+  --muted: #202826;
+  --muted-foreground: #9aa39c;
+  --accent: var(--brand-soft);
+  --accent-foreground: var(--brand-soft-foreground);
+  --destructive: #e2685a;
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--brand);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Ruled "ledger paper" texture — a recurring brand motif (auth panel,
+     topbar hairline, landing hero). Pair with a text color + opacity
+     utility to set the line color via currentColor, e.g.
+     text-brand-deep-foreground/10. */
+  .bg-ledger-lines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 27px,
+      currentColor 27px,
+      currentColor 28px
+    );
+  }
+
+  /* Tabular figures for monetary amounts so digits align in columns. */
+  .num-tabular {
+    font-variant-numeric: tabular-nums;
+  }
 }
