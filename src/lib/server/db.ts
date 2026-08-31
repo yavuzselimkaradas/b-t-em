@@ -159,12 +159,37 @@ declare global {
 }
 
 /**
- * Singleton Prisma Client. Next.js dev mode hot-reloads server modules on
+ * Lazily creates (and, outside production, caches on `globalThis`) the
+ * singleton Prisma Client. Next.js dev mode hot-reloads server modules on
  * every save, which would otherwise create a new PrismaClient (and a new
  * connection pool) per reload. Caching on `globalThis` survives the reload.
  */
-export const db = globalThis.__prisma ?? createPrismaClient();
+function getPrismaClient() {
+  if (globalThis.__prisma) return globalThis.__prisma;
 
-if (process.env.NODE_ENV !== "production") {
-  globalThis.__prisma = db;
+  const client = createPrismaClient();
+  if (process.env.NODE_ENV !== "production") {
+    globalThis.__prisma = client;
+  }
+  return client;
 }
+
+/**
+ * `db` must stay lazy: Next.js's build step imports server modules to
+ * collect page data (e.g. for `/_not-found`) even for routes that never
+ * touch the database, and does so without runtime secrets like
+ * `DATABASE_URL` loaded. Eagerly constructing PrismaClient at module-eval
+ * time (as a top-level `export const db = createPrismaClient()`) throws in
+ * that pass and fails the whole build. Proxying defers the throw to first
+ * actual use (`db.transaction.findMany(...)`, etc.), which only happens at
+ * request time, when `DATABASE_URL` is guaranteed to be set.
+ */
+export const db: ReturnType<typeof createPrismaClient> = new Proxy(
+  {} as ReturnType<typeof createPrismaClient>,
+  {
+    get(_target, prop, receiver) {
+      const client = getPrismaClient();
+      return Reflect.get(client as object, prop, receiver);
+    },
+  }
+);
